@@ -1,15 +1,14 @@
 package jaboye2448;
-
-import com.github.javafaker.Faker;
-
 /**
  * Hello world!
  *
  */
 public class App {
     public static void main(String[] args) {
-        
-        TestUser test = new TestUser();
-        System.out.println(new TestUser().toString());
+       Product test = new Product("Aerodynamic Aluminum Bottle plum 3");
+       System.out.println(test.getPrice());
+
     }
+
+    
 }

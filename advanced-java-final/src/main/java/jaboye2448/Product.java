@@ -19,8 +19,8 @@ public class Product {
         Faker faker = new Faker();
         this.productName = faker.commerce().productName() + " " + faker.commerce().color() + " " + faker.number().digit();
         this.description = faker.shakespeare().hamletQuote();
-        this.price = (int) faker.number().randomNumber(10, false);
-        this.quantity = (int) faker.number().randomNumber(100, false);
+        this.price = (int) faker.number().randomNumber(6, false);
+        this.quantity = (int) faker.number().randomNumber(5, false);
 
         if(this.quantity < 0){
             this.quantity *= -1;
@@ -30,16 +30,17 @@ public class Product {
         }
     }
 
-    public Product(String name){
+    public Product(String name) {
         this.productName = name;
-            String url = "jdbc:mysql://127.0.0.1:3306/advanced_java_data";
-            String user = "root";
-            String password = "root@123";
-            StringBuilder descriptionBld = new StringBuilder("SELECT * FROM advanced_java_data.product_info ");
-            descriptionBld.append(String.format("WHERE name = '%s'", this.productName));
-            String descriptionQuery = descriptionBld.toString();
-            System.out.println(descriptionQuery);
-            try{
+        String url = "jdbc:mysql://127.0.0.1:3306/advanced_java_data";
+        String user = "root";
+        String password = "root@123";
+        StringBuilder descriptionBld = new StringBuilder("SELECT * FROM advanced_java_data.product_info ");
+        descriptionBld.append(String.format("WHERE name = '%s'", this.productName));
+        String descriptionQuery = descriptionBld.toString();
+        System.out.println(descriptionQuery);
+        
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(url, user, password);
             Statement statement = con.createStatement();
@@ -47,10 +48,9 @@ public class Product {
             result.next();
             this.description = result.getString("description");
             this.price = result.getInt("price");
+            this.quantity = result.getInt("quantity");
 
-
-        }
-        catch(SQLException sql){
+        } catch (SQLException sql) {
             sql.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

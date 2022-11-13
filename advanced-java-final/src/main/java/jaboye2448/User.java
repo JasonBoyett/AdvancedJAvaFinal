@@ -32,8 +32,6 @@ public class User {
         this.mailingAddress = mailingAddress;
         this.creditCardNumber = creditCardNumber;
     }
-        
-       
 
     public int persistInSQL(){
 
@@ -60,7 +58,6 @@ public class User {
         return 1;
     }
     
-
     @Override
     public String toString() {
         StringBuilder bld = new StringBuilder("\n");

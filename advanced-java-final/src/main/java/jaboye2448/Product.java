@@ -38,6 +38,7 @@ public class Product {
         StringBuilder descriptionBld = new StringBuilder("SELECT * FROM advanced_java_data.product_info ");
         descriptionBld.append(String.format("WHERE name = '%s'", this.productName));
         String descriptionQuery = descriptionBld.toString();
+        System.out.println("Loading...");
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -49,10 +50,9 @@ public class Product {
             this.price = result.getInt("price");
             this.quantity = result.getInt("quantity");
 
-        } catch (SQLException sql) {
-            sql.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException|ClassNotFoundException e) {
             e.printStackTrace();
+            System.out.println("Build Failed " + e.getMessage());
         }
     }
 

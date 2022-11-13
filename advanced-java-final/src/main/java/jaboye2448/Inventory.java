@@ -56,4 +56,12 @@ public class Inventory {
         return result;
     }
 
+    public Product getProducts(String name){
+        return new Product(name);
+    }
+
+    public int getAmountListed(){
+        return products.length;
+    }
+
 }

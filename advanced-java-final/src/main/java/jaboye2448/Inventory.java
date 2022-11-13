@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Inventory {
     private Product[] products;
@@ -14,7 +15,7 @@ public class Inventory {
     }
 
     private Product[] inventoryFactory(){
-        ArrayList<Product> products = new ArrayList<Product>();
+        ArrayList<Product> products = new ArrayList<>();
         String url = "jdbc:mysql://127.0.0.1:3306/advanced_java_data";
         String user = "root";
         String password = "root@123";
@@ -25,10 +26,11 @@ public class Inventory {
             Statement statement = con.createStatement();
             ResultSet result = statement.executeQuery(querey);
 
-            while( result.next()){
-                products.add(new Product(result.toString()));
+            while(result.next()){
+                products.add(new Product(result.getString("name")));
             }
-            return (Product[]) products.toArray();
+            Collections.shuffle(products);
+            return products.toArray(new Product[products.size()]);
 
         } catch (SQLException|ClassNotFoundException e){
             e.printStackTrace();
@@ -42,6 +44,16 @@ public class Inventory {
 
     public Product getProducts(int index) {
         return products[index];
+    }
+
+    public Product[] getProducts(int start, int end){
+        Product[] result = new Product[end - start];
+        int index = 0;
+        for(int i = start; i < end; i++){
+            result[index] = products[i];
+            index++;
+        }
+        return result;
     }
 
 }

@@ -14,6 +14,7 @@ public class Product {
     private String description;
     private int price;
     private int quantity;
+    
 
     public Product(){
         Faker faker = new Faker();
@@ -89,10 +90,14 @@ public class Product {
         return description;
     }
 
-    public String getPrice() {
+    public String getPriceAsString() {
         Double result = (double) this.price;
         result /= 100;
         return String.format("$%,.2f", result);
+    }
+    
+    public Double getPrice(){
+        return ((double) (this.price)/100);
     }
 
     public int getQuantity() {

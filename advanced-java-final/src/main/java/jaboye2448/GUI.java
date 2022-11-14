@@ -3,6 +3,7 @@ import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GUI extends JFrame{
     private final static int INITIAL_HEIGHT = 720;
@@ -28,8 +29,9 @@ public class GUI extends JFrame{
     private JButton previous = new JButton("Previous");
     private JCheckBox[] boxes = new JCheckBox[10];
     private JComboBox<Integer>[] combos = new JComboBox[10];
-    private Integer[] numbers = {1,2,3,4,5,6,7,8,9,10};
+    private Integer[] numbers = {0,1,2,3,4,5,6,7,8,9,10};
     private Inventory myInventory = new Inventory();
+    private ArrayList<Product> selectedItems = new ArrayList<Product>();
 
     public GUI() {
         
@@ -69,19 +71,46 @@ public class GUI extends JFrame{
     }
 
     private void checkout(){
-        int subTotal = 0;
+        double subtotal = 0;
+        ArrayList<String> purchased = new ArrayList<String>();
+        StringBuilder message = new StringBuilder("Thank you for shopping!\n\n");
         for(int i = 0; i < boxes.length; i++){
             if(boxes[i].isSelected()){
                 StringBuilder bld = new StringBuilder(boxes[i].getText());
-                String name = bld.substring(bld.indexOf(": "));
-                System.out.println(name);
-                //this.myInventory.getProducts(boxes.)
+                String name = bld.substring(bld.indexOf(": ")+2);
+                for(int j = 0; j < combos[i].getSelectedIndex(); j++){
+                    selectedItems.add(this.myInventory.getProducts(name));
+                }
+                
             }
+        }
+        if(!selectedItems.isEmpty()){
+            for(int i = 0; i < selectedItems.size(); i++){
+                subtotal += (selectedItems.get(i).getPrice());
+                if(i>0){
+                    addSingle(purchased, i);
+                }
+                else{
+                    purchased.add(selectedItems.get(i).getProductName());
+                }
+            }
+        }
+        for(int i = 0; i < purchased.size(); i++){
+            message.append(String.format("%s%n", purchased.get(i)));
+        }
+        message.append(String.format("Subtotal: $%,.2f", subtotal));
+        JOptionPane.showMessageDialog(this, message.toString());
+        this.dispose();
+    }
+
+    private void addSingle(ArrayList<String> list, int index){
+        if(!selectedItems.get(index).getProductName().equals(selectedItems.get(index-1).getProductName())){
+            list.add(selectedItems.get(index).getProductName());
         }
     }
 
     private String setBoxText(Product product) {
-        StringBuilder bld  = new StringBuilder(product.getPrice());
+        StringBuilder bld  = new StringBuilder(product.getPriceAsString());
         bld.append(String.format(": %s", product.getProductName()));
         return bld.toString();
     }

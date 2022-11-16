@@ -1,0 +1,17 @@
+"filename", "language", "Java", "XML", "comment", "blank", "total"
+"/Users/jasonboyett/Documents/Coding/GitHub/AdvancedJAvaFinal/advanced-java-final/pom.xml", "XML", 0, 85, 4, 13, 102
+"/Users/jasonboyett/Documents/Coding/GitHub/AdvancedJAvaFinal/advanced-java-final/src/main/java/jaboye2448/App.java", "Java", 6, 0, 4, 6, 16
+"/Users/jasonboyett/Documents/Coding/GitHub/AdvancedJAvaFinal/advanced-java-final/src/main/java/jaboye2448/GUI.java", "Java", 114, 0, 0, 19, 133
+"/Users/jasonboyett/Documents/Coding/GitHub/AdvancedJAvaFinal/advanced-java-final/src/main/java/jaboye2448/Inventory.java", "Java", 56, 0, 0, 11, 67
+"/Users/jasonboyett/Documents/Coding/GitHub/AdvancedJAvaFinal/advanced-java-final/src/main/java/jaboye2448/MyDB.java", "Java", 44, 0, 0, 8, 52
+"/Users/jasonboyett/Documents/Coding/GitHub/AdvancedJAvaFinal/advanced-java-final/src/main/java/jaboye2448/Product.java", "Java", 88, 0, 0, 18, 106
+"/Users/jasonboyett/Documents/Coding/GitHub/AdvancedJAvaFinal/advanced-java-final/src/main/java/jaboye2448/User.java", "Java", 60, 0, 0, 14, 74
+"/Users/jasonboyett/Documents/Coding/GitHub/AdvancedJAvaFinal/advanced-java-final/src/test/java/jaboye2448/AppTest.java", "Java", 11, 0, 6, 4, 21
+"/Users/jasonboyett/Documents/Coding/GitHub/AdvancedJAvaFinal/advanced-java-final/target/classes/jaboye2448/App.class", "Java", 9, 0, 0, 0, 9
+"/Users/jasonboyett/Documents/Coding/GitHub/AdvancedJAvaFinal/advanced-java-final/target/classes/jaboye2448/GUI.class", "Java", 93, 0, 0, 2, 95
+"/Users/jasonboyett/Documents/Coding/GitHub/AdvancedJAvaFinal/advanced-java-final/target/classes/jaboye2448/Inventory.class", "Java", 25, 0, 0, 0, 25
+"/Users/jasonboyett/Documents/Coding/GitHub/AdvancedJAvaFinal/advanced-java-final/target/classes/jaboye2448/MyDB.class", "Java", 31, 0, 0, 1, 32
+"/Users/jasonboyett/Documents/Coding/GitHub/AdvancedJAvaFinal/advanced-java-final/target/classes/jaboye2448/Product.class", "Java", 50, 0, 0, 1, 51
+"/Users/jasonboyett/Documents/Coding/GitHub/AdvancedJAvaFinal/advanced-java-final/target/classes/jaboye2448/User.class", "Java", 38, 0, 0, 0, 38
+"/Users/jasonboyett/Documents/Coding/GitHub/AdvancedJAvaFinal/advanced-java-final/target/test-classes/jaboye2448/AppTest.class", "Java", 11, 0, 0, 0, 11
+"Total", "-", 636, 85, 14, 97, 832

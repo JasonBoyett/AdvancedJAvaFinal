@@ -32,6 +32,7 @@ public class User {
         this.mailingAddress = mailingAddress;
         this.creditCardNumber = creditCardNumber;
     }
+    public User(String sqlPath){}
 
     public int persistInSQL(){
 

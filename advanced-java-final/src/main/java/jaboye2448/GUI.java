@@ -1,6 +1,7 @@
 package jaboye2448;
 import javax.swing.*;
-import javax.swing.plaf.DimensionUIResource;
+
+import com.github.javafaker.Faker;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -8,18 +9,9 @@ import java.util.ArrayList;
 public class GUI extends JFrame{
     private final static int INITIAL_HEIGHT = 720;
     private final static int INITIAL_WIDTH = 1280;
-    private final int SCROLL_X = 0;
+    private final static int SCROLL_X = 0;
     private final static int SCROLL_Y = 0;
     
-    private int buttonPanelWidth;
-    private int buttonPanelHeight;
-    private int buttonPanelX;
-    private int buttonPanelY;
-    private int scrollHeight;
-    private int scrollWidth;
-    private int scrollX;
-    private int scrollY;
-
     private GridLayout grid = new GridLayout(10,2,5,20);
     private JPanel scrollingPanel = new JPanel(grid);
     private JPanel buttonPanel = new JPanel();
@@ -72,19 +64,25 @@ public class GUI extends JFrame{
 
     private void checkout(){
         double subtotal = 0;
-        ArrayList<String> purchased = new ArrayList<String>();
-        StringBuilder message = new StringBuilder("Thank you for shopping!\n\n");
+        ArrayList<String> purchased = new ArrayList<>();
+        ArrayList<Integer> amounts = new ArrayList<>();
+        Faker faker = new Faker();
+        StringBuilder message = new StringBuilder(String.format("Thank you for shopping at %s!\n\n", faker.app().name()));
         for(int i = 0; i < boxes.length; i++){
             if(boxes[i].isSelected()){
                 StringBuilder bld = new StringBuilder(boxes[i].getText());
                 String name = bld.substring(bld.indexOf(": ")+2);
+                amounts.add(combos[i].getSelectedIndex());
                 for(int j = 0; j < combos[i].getSelectedIndex(); j++){
                     selectedItems.add(this.myInventory.getProducts(name));
                 }
                 
             }
         }
-        if(!selectedItems.isEmpty()){
+        if(selectedItems.isEmpty()){
+            return;
+        }
+        else if(!selectedItems.isEmpty()){
             for(int i = 0; i < selectedItems.size(); i++){
                 subtotal += (selectedItems.get(i).getPrice());
                 if(i>0){
@@ -96,11 +94,12 @@ public class GUI extends JFrame{
             }
         }
         for(int i = 0; i < purchased.size(); i++){
-            message.append(String.format("%s%n", purchased.get(i)));
+            message.append(String.format("%s '%s'%n", amounts.get(i), purchased.get(i)));
         }
         message.append(String.format("Subtotal: $%,.2f", subtotal));
         JOptionPane.showMessageDialog(this, message.toString());
         this.dispose();
+        System.exit(0);
     }
 
     private void addSingle(ArrayList<String> list, int index){

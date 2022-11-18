@@ -16,7 +16,7 @@ public class Product {
     private int quantity;
     
 
-    public Product(){
+    public Product(){//builds a random product
         Faker faker = new Faker();
         this.productName = faker.commerce().productName() + " " + faker.commerce().color() + " " + faker.number().digit();
         this.description = faker.shakespeare().hamletQuote();
@@ -31,12 +31,12 @@ public class Product {
         }
     }
 
-    public Product(String name) {
+    public Product(String name) {//builds a product object by pulling info from the database using the product name as a search term
         this.productName = name;
         String url = "jdbc:mysql://127.0.0.1:3306/advanced_java_data";
         String user = "root";
         String password = "root@123";
-        StringBuilder descriptionBld = new StringBuilder("SELECT * FROM advanced_java_data.product_info ");
+        StringBuilder descriptionBld = new StringBuilder("select * from advanced_java_data.customer_info ");
         descriptionBld.append(String.format("WHERE name = '%s'", this.productName));
         String descriptionQuery = descriptionBld.toString();
 
@@ -56,7 +56,7 @@ public class Product {
         }
     }
 
-    public int persistInSQL(){
+    public int persistInSQL(){//sends the product to the database
 
         try{
             String url = "jdbc:mysql://127.0.0.1:3306/advanced_java_data";
@@ -80,7 +80,7 @@ public class Product {
         }
         return 1;
     }    
-    
+    //getters for each property
     public String getProductName() {
         return productName;
     }
@@ -89,7 +89,7 @@ public class Product {
         return description;
     }
 
-    public String getPriceAsString() {
+    public String getPriceAsString() {//a getter that specifically returns the price as a dollar amount i.e. $99.98
         Double result = (double) this.price;
         result /= 100;
         return String.format("$%,.2f", result);

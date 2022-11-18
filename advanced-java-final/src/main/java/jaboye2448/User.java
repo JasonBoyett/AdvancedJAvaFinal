@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -15,7 +16,7 @@ public class User {
     String mailingAddress;
     long creditCardNumber;
 
-    public User() {
+    public User() {//builds a random user
         this.name = faker.name().fullName();
         this.billingAddress = faker.address().streetAddress();
         this.mailingAddress = faker.address().streetAddress();
@@ -32,9 +33,32 @@ public class User {
         this.mailingAddress = mailingAddress;
         this.creditCardNumber = creditCardNumber;
     }
-    public User(String sqlPath){}
+    public User(String name){
+        this.name = name;
+        String url = "jdbc:mysql://127.0.0.1:3306/advanced_java_data";
+        String user = "root";
+        String password = "root@123";
+        StringBuilder descriptionBld = new StringBuilder("SELECT * FROM advanced_java_data.customer_info(name, billing_address, mailing_address, credit_card)");
+        descriptionBld.append(String.format("WHERE name = '%s'", this.name));
+        String descriptionQuery = descriptionBld.toString();
 
-    public int persistInSQL(){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, user, password);
+            Statement statement = con.createStatement();
+            ResultSet result = statement.executeQuery(descriptionQuery);
+            result.next();
+            this.billingAddress = result.getString("billing_address");
+            this.mailingAddress = result.getString("mailing_address");
+            this.creditCardNumber = Long.parseLong(result.getString("credit_card"));
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Build Failed " + e.getMessage());
+        }
+    }
+
+    public int persistInSQL(){//sends the user object to the database
 
         try{
             String url = "jdbc:mysql://127.0.0.1:3306/advanced_java_data";
@@ -60,7 +84,7 @@ public class User {
     }
     
     @Override
-    public String toString() {
+    public String toString() {//returns all the user's information as a string
         StringBuilder bld = new StringBuilder("\n");
         bld.append("Name: ").append(name).append("\n");
         bld.append("Billing Address: ").append(billingAddress).append("\n");
@@ -69,5 +93,38 @@ public class User {
 
         return bld.toString();
     }
+    //getters and setters
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(String billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+
+    public String getMailingAddress() {
+        return mailingAddress;
+    }
+
+    public void setMailingAddress(String mailingAddress) {
+        this.mailingAddress = mailingAddress;
+    }
+
+    public long getCreditCardNumber() {
+        return this.creditCardNumber;
+    }
+
+    public void setCreditCardNumber(long creditCardNumber) {
+        this.creditCardNumber = creditCardNumber;
+    }
+
+    
 }

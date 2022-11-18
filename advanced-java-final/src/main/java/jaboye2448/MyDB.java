@@ -5,16 +5,16 @@ import javax.swing.JOptionPane;
 import com.github.javafaker.Faker;
 
 public class MyDB {
-    private int target = 1000;
+    private int target = 1000;//the number of items that the database should hold
     public static final boolean POPULATE = true;
     
-    public MyDB(boolean populate) {
+    public MyDB(boolean populate) {//builds the database if true
         if(populate){
             populate();
         }
     }
 
-    private void populate(){
+    private void populate(){//this method builds the database
         try {
             int sentProducts = 0;
             int sentUsers = 0; 

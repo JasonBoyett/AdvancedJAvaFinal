@@ -12,7 +12,7 @@ public class GUI extends JFrame{
     private final static int SCROLL_X = 0;
     private final static int SCROLL_Y = 0;
     
-    private GridLayout grid = new GridLayout(10,2,5,20);
+    private GridLayout grid = new GridLayout(10,2,50,20);
     private JPanel scrollingPanel = new JPanel(grid);
     private JPanel buttonPanel = new JPanel();
     private JScrollPane scroll = new JScrollPane(this.scrollingPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -64,12 +64,13 @@ public class GUI extends JFrame{
 
     private void checkout(){
         double subtotal = 0;
-        ArrayList<String> purchased = new ArrayList<>();
-        ArrayList<Integer> amounts = new ArrayList<>();
-        Faker faker = new Faker();
-        StringBuilder message = new StringBuilder(String.format("Thank you for shopping at %s!\n\n", faker.app().name()));
-        for(int i = 0; i < boxes.length; i++){
-            if(boxes[i].isSelected()){
+        ArrayList<String> purchased = new ArrayList<>();//a list of the purchased items
+        ArrayList<Integer> amounts = new ArrayList<>();//the number purchased for each selected item
+        Faker faker = new Faker();//a Faker to make a company name
+        //this message is shown to the user on checkout
+        StringBuilder message = new StringBuilder(String.format("Thank you for shopping at %s!%n%n", faker.app().name()));
+        for(int i = 0; i < boxes.length; i++){//loops through the checked boxes to 
+            if(boxes[i].isSelected()){//this block adds the selected items to the corresponding list and the amounts to the corresponding list
                 StringBuilder bld = new StringBuilder(boxes[i].getText());
                 String name = bld.substring(bld.indexOf(": ")+2);
                 amounts.add(combos[i].getSelectedIndex());
@@ -79,10 +80,10 @@ public class GUI extends JFrame{
                 
             }
         }
-        if(selectedItems.isEmpty()){
+        if(selectedItems.isEmpty()){//if no items were selected the method will do nothing
             return;
         }
-        else if(!selectedItems.isEmpty()){
+        else if(!selectedItems.isEmpty()){//loops through the selected items and their amounts and uses this information to build a list of items purchased, and sets the subtotal
             for(int i = 0; i < selectedItems.size(); i++){
                 subtotal += (selectedItems.get(i).getPrice());
                 if(i>0){
@@ -93,35 +94,35 @@ public class GUI extends JFrame{
                 }
             }
         }
-        for(int i = 0; i < purchased.size(); i++){
+        for(int i = 0; i < purchased.size(); i++){//builds the string that will be shown to the user
             message.append(String.format("%s '%s'%n", amounts.get(i), purchased.get(i)));
         }
-        message.append(String.format("Subtotal: $%,.2f", subtotal));
-        JOptionPane.showMessageDialog(this, message.toString());
-        this.dispose();
-        System.exit(0);
+        message.append(String.format("Subtotal: $%,.2f", subtotal));//adds on the subtotal
+        JOptionPane.showMessageDialog(this, message.toString());//displays the final message
+        this.dispose();//closes the window
+        System.exit(0);//exits the program
     }
 
-    private void addSingle(ArrayList<String> list, int index){
+    private void addSingle(ArrayList<String> list, int index){//a method to make sure that only one instance of each item is added to the appropriate list
         if(!selectedItems.get(index).getProductName().equals(selectedItems.get(index-1).getProductName())){
             list.add(selectedItems.get(index).getProductName());
         }
     }
 
-    private String setBoxText(Product product) {
+    private String setBoxText(Product product) {//sets the text of the check boxes
         StringBuilder bld  = new StringBuilder(product.getPriceAsString());
         bld.append(String.format(": %s", product.getProductName()));
         return bld.toString();
     }
 
-    private String setHoverText(Product product){
+    private String setHoverText(Product product){//sets the hover over menus of the check boxes
         StringBuilder bld = new StringBuilder(product.getDescription());
         bld.append(String.format(" %,d units in stock", product.getQuantity()));
         return bld.toString();
     }
 
     @Override
-    public void paint(Graphics g){
+    public void paint(Graphics g){//paints in the GUI elements that can't easily be handled using layout managers
         super.paint(g);
         
         

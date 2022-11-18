@@ -14,7 +14,7 @@ public class Inventory {
         this.products = inventoryFactory();
     }
 
-    private Product[] inventoryFactory(){
+    private Product[] inventoryFactory(){//builds an inventory by pulling in all elements of the connected database and building objects based on the information stored there
         ArrayList<Product> products = new ArrayList<>();
         String url = "jdbc:mysql://127.0.0.1:3306/advanced_java_data";
         String user = "root";
@@ -38,15 +38,15 @@ public class Inventory {
         }
     }
 
-    public Product[] getProducts() {
+    public Product[] getProducts() {//return the entire inventory
         return this.products;
     }
 
-    public Product getProducts(int index) {
+    public Product getProducts(int index) {//gets a product from the inventory based on its index in the products array
         return products[index];
     }
 
-    public Product[] getProducts(int start, int end){
+    public Product[] getProducts(int start, int end){//a getter that pulls out a selected range of products from the inventory
         Product[] result = new Product[end - start];
         int index = 0;
         for(int i = start; i < end; i++){
@@ -56,11 +56,11 @@ public class Inventory {
         return result;
     }
 
-    public Product getProducts(String name){
+    public Product getProducts(String name){//gets a product of a given name from the inventory
         return new Product(name);
     }
 
-    public int getAmountListed(){
+    public int getAmountListed(){//returns the number of products in the inventory
         return products.length;
     }
 

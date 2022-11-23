@@ -17,6 +17,7 @@ public class EditOrder extends JFrame implements ActionListener{
     JTextArea showGrandTotal = preppedArea("");
     JButton confirm = new JButton("Confirm");
     JButton returnToShop = new JButton("Return to Shop");
+
     public EditOrder(ArrayList<Product> purchased, ArrayList<Integer> amounts){
         setTitle("Edit Order");
         this.setVisible(true);
@@ -109,6 +110,7 @@ public class EditOrder extends JFrame implements ActionListener{
             for(int i = 0; i < totals.size(); i++){
                 showTotals.get(i).setText(formatTotalText(calculateTotal(i)));
                 totals.set(i, calculateTotal(i));
+                amounts.set(i, incrementors.get(i).getSelected());
             }
             total = calculateTotal();
             showGrandTotal.setText(formatTotalText(total));

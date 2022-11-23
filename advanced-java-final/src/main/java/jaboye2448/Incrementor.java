@@ -33,7 +33,7 @@ public class Incrementor extends JPanel{
             selected++;
         }
         else if(selected == limit){
-            selected = limit;
+            selected = 0;
         }
         view.setText(String.valueOf(selected));
     }
@@ -42,7 +42,7 @@ public class Incrementor extends JPanel{
         if (selected > 0) {
             selected--;
         } else {
-            selected = 0;
+            selected = limit;
         }
         view.setText(String.valueOf(selected));
     }

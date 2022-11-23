@@ -1,9 +1,7 @@
 package jaboye2448;
 
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
-import javax.swing.event.*;
 
 import com.github.javafaker.Faker;
 
@@ -120,7 +118,7 @@ public class ConfirmOrder extends JFrame{
         
         mainPanel.add(new JPanel());
         mainPanel.add(new JPanel());
-        String show = String.format("$%,.2f", this.subtotal);
+        String show = String.format("$%,.2f", this.subtotal+tax);
         JTextArea showSubT = new JTextArea(show);
         prepTextArea(showSubT);
         mainPanel.add(showSubT);
@@ -140,7 +138,7 @@ public class ConfirmOrder extends JFrame{
         prepTextArea(showShipping);
         mainPanel.add(showShipping);
 
-        total = subtotal + shipping;
+        total = subtotal + shipping + tax;
 
         JTextArea gTotal = new JTextArea("Grand total: ");
         prepTextArea(gTotal);
@@ -164,7 +162,6 @@ public class ConfirmOrder extends JFrame{
         backPanel.add(topPanel, BorderLayout.NORTH);
         backPanel.add(scroll, BorderLayout.CENTER);
         backPanel.add(buttonPanel, BorderLayout.SOUTH);
-        this.add(new JPanel(), BorderLayout.WEST);
 
         this.add(backPanel);
         this.pack();
@@ -177,11 +174,11 @@ public class ConfirmOrder extends JFrame{
     }
 
     private int calculateItemsPurchased(){
-        int total = 0;
+        int result = 0;
         for(int i = 0; i < amounts.size(); i++){
-            total += amounts.get(i).intValue();
+            result += amounts.get(i).intValue();
         }
-        return total;
+        return result;
     }
 
     public void pressConfirm(){

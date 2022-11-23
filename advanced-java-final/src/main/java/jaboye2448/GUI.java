@@ -1,3 +1,9 @@
+/*
+ * Jason Boyett - jaboye2448
+ * CIT 4423 01
+ * november 20, 2022
+ * mac OS
+ */
 package jaboye2448;
 import javax.swing.*;
 
@@ -17,36 +23,37 @@ public class GUI extends JFrame{
     private JPanel buttonPanel = new JPanel();
     private JScrollPane scroll = new JScrollPane(this.scrollingPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     private JButton checkout = new JButton("Checkout");
-    private JButton next = new JButton("Next");
-    private JButton previous = new JButton("Previous");
+    
+    private Incrementor[] incrementors = new Incrementor[10];
     private JCheckBox[] boxes = new JCheckBox[10];
-    private JComboBox<Integer>[] combos = new JComboBox[10];
     private Integer[] numbers = {0,1,2,3,4,5,6,7,8,9,10};
     private Inventory myInventory = new Inventory();
     private ArrayList<Product> selectedItems = new ArrayList<Product>();
+
+    ArrayList<String> purchased = new ArrayList<>();// a list of the purchased items
+    ArrayList<Integer> amounts = new ArrayList<>();// the number purchased for each selected item
 
     public GUI() {
         
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
         
-        previous.setEnabled(false);
-        buttonPanel.add(next);
+        
         checkout.addActionListener(e -> checkout());
         buttonPanel.add(checkout);
-        buttonPanel.add(previous);
+        
         this.add(buttonPanel);
 
         for(int i = 0; i < boxes.length; i++) {
             boxes[i] = new JCheckBox();
-            combos[i] = new JComboBox<>(numbers);
+            incrementors[i] = new Incrementor(0, 10);
             
             boxes[i].setVisible(true);
             boxes[i].setToolTipText(setHoverText(myInventory.getProducts(i)));
             boxes[i].setText(setBoxText(myInventory.getProducts(i)));
             
             scrollingPanel.add(boxes[i]);
-            scrollingPanel.add(combos[i]);
+            scrollingPanel.add(incrementors[i]);
         }
         this.add(scroll);
         buttonPanel.setBackground(Color.gray);
@@ -64,8 +71,7 @@ public class GUI extends JFrame{
 
     private void checkout(){
         double subtotal = 0;
-        ArrayList<String> purchased = new ArrayList<>();//a list of the purchased items
-        ArrayList<Integer> amounts = new ArrayList<>();//the number purchased for each selected item
+        
         Faker faker = new Faker();//a Faker to make a company name
         //this message is shown to the user on checkout
         StringBuilder message = new StringBuilder(String.format("Thank you for shopping at %s!%n%n", faker.app().name()));
@@ -73,8 +79,8 @@ public class GUI extends JFrame{
             if(boxes[i].isSelected()){//this block adds the selected items to the corresponding list and the amounts to the corresponding list
                 StringBuilder bld = new StringBuilder(boxes[i].getText());
                 String name = bld.substring(bld.indexOf(": ")+2);
-                amounts.add(combos[i].getSelectedIndex());
-                for(int j = 0; j < combos[i].getSelectedIndex(); j++){
+                amounts.add(incrementors[i].getSelected());
+                for(int j = 0; j < incrementors[i].getSelected(); j++){
                     selectedItems.add(this.myInventory.getProducts(name));
                 }
                 
@@ -94,13 +100,8 @@ public class GUI extends JFrame{
                 }
             }
         }
-        for(int i = 0; i < purchased.size(); i++){//builds the string that will be shown to the user
-            message.append(String.format("%s '%s'%n", amounts.get(i), purchased.get(i)));
-        }
-        message.append(String.format("Subtotal: $%,.2f", subtotal));//adds on the subtotal
-        JOptionPane.showMessageDialog(this, message.toString());//displays the final message
+        ConfirmOrder confirm = new ConfirmOrder(purchased,amounts);
         this.dispose();//closes the window
-        System.exit(0);//exits the program
     }
 
     private void addSingle(ArrayList<String> list, int index){//a method to make sure that only one instance of each item is added to the appropriate list
@@ -134,10 +135,8 @@ public class GUI extends JFrame{
         int buttonHeight = (buttonPanel.getHeight()/2);
         int buttonY = (buttonHeight/4);
         int checkoutX = (buttonPanel.getWidth()/2)-(buttonWidth/2);
-        int previousX= (buttonWidth);
-        int nextX = (buttonPanel.getWidth() - (buttonWidth*2));
+        
         checkout.setBounds(checkoutX, buttonY, buttonWidth, buttonHeight);
-        previous.setBounds(previousX, buttonY, buttonWidth, buttonHeight);
-        next.setBounds(nextX, buttonY, buttonWidth, buttonHeight);
+        
     }
 }

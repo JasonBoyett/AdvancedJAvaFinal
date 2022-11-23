@@ -1,3 +1,9 @@
+/*
+ * Jason Boyett - jaboye2448
+ * CIT 4423 01
+ * november 20, 2022
+ * mac OS
+ */
 package jaboye2448;
 
 import java.sql.Connection;
@@ -28,6 +34,7 @@ public class Inventory {
 
             while(result.next()){
                 products.add(new Product(result.getString("name")));
+                System.out.println("loading...");
             }
             Collections.shuffle(products);
             return products.toArray(new Product[products.size()]);

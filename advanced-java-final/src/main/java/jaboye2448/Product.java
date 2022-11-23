@@ -1,3 +1,9 @@
+/*
+ * Jason Boyett - jaboye2448
+ * CIT 4423 01
+ * november 20, 2022
+ * mac OS
+ */
 package jaboye2448;
 
 import java.sql.Connection;
@@ -26,7 +32,7 @@ public class Product {
         if(this.quantity < 0){
             this.quantity *= -1;
         }
-        if(this.price < 0){
+        if(this.price < 0){//this comment was made in vim
             this.price *= -1;
         }
     }
@@ -36,7 +42,7 @@ public class Product {
         String url = "jdbc:mysql://127.0.0.1:3306/advanced_java_data";
         String user = "root";
         String password = "root@123";
-        StringBuilder descriptionBld = new StringBuilder("select * from advanced_java_data.customer_info ");
+        StringBuilder descriptionBld = new StringBuilder("select * from advanced_java_data.product_info ");
         descriptionBld.append(String.format("WHERE name = '%s'", this.productName));
         String descriptionQuery = descriptionBld.toString();
 
@@ -86,7 +92,7 @@ public class Product {
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public String getPriceAsString() {//a getter that specifically returns the price as a dollar amount i.e. $99.98

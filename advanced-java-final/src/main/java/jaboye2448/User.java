@@ -1,3 +1,9 @@
+/*
+ * Jason Boyett - jaboye2448
+ * CIT 4423 01
+ * november 20, 2022
+ * mac OS
+ */
 package jaboye2448;
 
 import com.github.javafaker.Faker;

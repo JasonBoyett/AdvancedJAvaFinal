@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Incrementor extends JPanel{
    private int start;
-   int limit;
+   private int limit;
    private int selected;
    private JTextArea view;
    private GridLayout grid = new GridLayout(1,3);
